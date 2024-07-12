@@ -1,0 +1,23 @@
+{% extends 'admin/index.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-3"><h3>Create Book</h3></div>
+    <div class="col-md-3"><a href="" class="btn btn-warning">Author</a> </div>
+</div>
+
+<h1>Create Book</h1>
+
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{form.as_p}}
+    <input type="submit" value="Submit">
+
+</form>
+<br><br>
+
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'user/userindex.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if not cart_items %}
+<P>Your cart is empty</P>
+
+{% else %}
+{% for i in cart_items %}
+
+<div class="col-xxl-4 col-md-6" style="width:18rem">
+    <div class="card info-card sales-card ">
+
+        <div class="filter">
+            <a   href="{% url 'remove_cart' i.id %}"  class="icon" aria-label="Close"><b>X</b></a>
+        </div>
+        <div class="card-title" ><img src="{{ book.image.url }}"  class="card-img-top" alt=" " style="width:2rem" >
+
+            <div class="card-body">
+
+                <h5 class="card-title">{{i.book.title}} </h5>
+                <h5 class="card-title">{{i.book.price}} </h5>
+
+                {% if i.quantity <= i.book.quantity %}
+                <p><a href="{% url 'increase' i.id %}">+</a></p>
+                <p><a href="{% url 'decrease' i.id %}">-</a></p>
+                <p><input type="number" name="quantity" value="{{i.quantity}}">Quantity</p>
+                {% endif %}
+
+                <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-cart"></i>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endfor %}
+
+{% endif %}
+    <form action="{% url 'create_checkout_session' %}" method="post">
+        {% csrf_token %}
+        <div class="card" style="width:18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Total products:{{ total_items}}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">Total price:{{ total_price}}</h6>
+                <button id="checkout_button" type="submit" class="card-link">Check Out</button>
+            </div>
+        </div>
+    </form>
+
+<!-- End Sales Card -->
+
+
+
+
+{% endblock %}
